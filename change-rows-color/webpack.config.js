@@ -22,5 +22,20 @@ module.exports={
         filename: 'main.js' // 默认输出文件名
     },
     // 插件的数组 ,webpack在运行时候会调用这些插件
-    plugins:[htmlPlugin]
+    plugins:[htmlPlugin],
+    devServer: {
+        // 首次打包成功后自动打开浏览器
+        open: true,
+        port: 80,
+        // 指定打开地址
+        host: '127.0.0.1'
+    },
+    module: { //所有第三方文件模块的匹配规则
+        rules: [
+            { test: /\.css$/, use: ['style-loader','css-loader'] },
+            { test: /\.less$/, use: ['style-loader','css-loader','less-loader'] },
+            { test: /\.jpg|png|gif$/, use: 'url-loader'} // limit设置临界值，超过的话不转化为base64
+        ]
+
+    }
 }
