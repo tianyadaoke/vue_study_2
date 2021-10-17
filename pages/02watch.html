@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="username">
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                username: ''
+            },
+            watch:{
+                username:{
+                    handler(newValue,oldValue){
+                        console.log('对象类型侦听器')
+                        console.log('判断用户名',newValue,'是否可用')   
+                    },
+                    immediate: true //第一次进来触发
+
+                }
+                // username(newValue,oldValue){
+                //     if(newValue==='') return
+                //     console.log('旧值为',oldValue)
+                //     console.log('新值为',newValue)
+                //    // $.get('https://www.baidu.com/+newValue)
+                //    console.log('判断用户名',newValue,'是否可用')
+                // }
+            }
+        })
+    </script>
+</body>
+
+</html>

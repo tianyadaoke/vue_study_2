@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <style>
+        .box{
+            width: 200px;
+            height: 200px;  
+        }
+    </style>
+</head>
+<body>
+    <div id="app" >
+        R:<input type="text" v-model="r">
+        G:<input type="text" v-model="g">
+        B:<input type="text" v-model="b">
+       <div class="box" :style="{backgroundColor: rgb}">
+            {{rgb}}
+       </div>
+       <button @click="show">
+            显示
+       </button>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:'#app',
+            data:{
+                r:0,
+                g:0,
+                b:0
+            },  
+            methods:{
+                show(){
+                    console.log('rgb:',this.rgb)
+                }
+            },
+            computed:{
+                rgb(){
+                    return `rgb(${this.r},${this.g},${this.b})`
+                }
+            }
+        })
+    </script>
+</body>
+</html>

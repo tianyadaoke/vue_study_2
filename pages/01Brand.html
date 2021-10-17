@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <!-- 引入组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
 </head>
 
 <body>
@@ -30,16 +31,25 @@
                 </el-table-column>
                 <el-table-column label="日期">
                     <template slot-scope="scope">
-                        {{scope.row.time.toLocaleDateString()}}
+                        <!-- {{scope.row.time.toLocaleDateString()}} -->
+                        {{scope.row.time | dateFormat}}
                     </template>
                 </el-table-column>
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <el-button @click="handleClick(scope.row.id)">删除</el-button>
+                        <el-button @click="remove(scope.row.id)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
         </template>
+        <div>
+            <el-input placeholder="请输入品牌" v-model.trim="brand">
+                <template slot="prepend">品牌名称</template>
+                <template slot="append">
+                    <el-button @click="add">添加</el-button>
+                </template>
+            </el-input>
+        </div>
 
         <!-- <table>
             <thead>
@@ -71,9 +81,15 @@
         </table> -->
     </div>
     <script>
+        Vue.filter('dateFormat',function(time){
+            const dtStr=dayjs(time).format('YYYY/MM/DD HH:mm:ss')
+            return dtStr
+        })
         var app = new Vue({
             el: '#app',
             data: {
+                brand: '',
+                nextId:5,
                 list: [
                     { id: 1, name: '宝马', status: true, time: new Date() },
                     { id: 2, name: '奔驰', status: false, time: new Date() },
@@ -81,9 +97,22 @@
                     { id: 4, name: '沃尔沃', status: true, time: new Date() },
                 ]
             },
-            methods:{
-                handleClick(id){
-                    console.log('我被删除了,我的id是：',id)
+            methods: {
+                remove(id) {
+                    console.log('我被删除了,我的id是：', id)
+                    this.list = this.list.filter(item => item.id !== id)
+                },
+                add() {
+                    if (this.brand === '') return this.$message('品牌不能为空')
+                    const obj={
+                        id:this.nextId,
+                        name:this.brand,
+                        status:true,
+                        time: new Date()
+                    }
+                    this.list.push(obj)
+                    this.brand=''
+                    this.nextId++
                 }
             }
         })

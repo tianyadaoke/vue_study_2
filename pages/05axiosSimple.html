@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <el-button @click="handlerPost">发送post</el-button>
+        <el-button @click="handlerGet">发送get</el-button>
+    </div>
+</body>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        methods: {
+            async handlerGet() {
+                const { data: res } = await axios.get('http://localhost:3000/car', {
+                    params: { id: 13 }
+                })
+                console.log(res)
+            },
+            async handlerPost() {
+               const {data:res}=await axios.post('http://localhost:3000/car',{
+                 name:'citroen',
+                 price:99
+               })
+               console.log(res)
+            }
+        }
+    })
+</script>
+
+</html>
